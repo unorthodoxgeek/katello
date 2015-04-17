@@ -97,12 +97,12 @@ module Katello
         end
 
         def rescue_from_lock_conflict_exception(exception)
-          debugger
-          exception.conflicting_tasks = exception.conflicting_tasks.collect do |task|
+          lock_exception = {:message => exception.message, :lock => exception.lock}
+          lock_exception[:conflicting_tasks] = exception.conflicting_tasks.collect do |task|
             OpenStruct.new(:id => task.id, :label => task.label, :external_id => task.external_id, :url => task.url,
                            :started_at => task.started_at, :state => task.state, :result => task.result)
           end
-          respond_for_exception(exception, :status => :conflict)
+          respond_for_exception(lock_exception, :status => :conflict)
         end
 
         def rescue_from_record_invalid(exception)
