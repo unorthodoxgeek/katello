@@ -31,7 +31,7 @@ module Katello
           rescue_from Errors::NotFound, :with => :rescue_from_not_found
           rescue_from Errors::SecurityViolation, :with => :rescue_from_security_violation
           rescue_from Errors::ConflictException, :with => :rescue_from_conflict_exception
-          rescue_from ForemanTasks::Lock::LockConflict, :with => :rescue_from_conflict_exception
+          rescue_from ForemanTasks::Lock::LockConflict, :with => :rescue_from_lock_conflict_exception
           rescue_from Errors::UnsupportedActionException, :with => :rescue_from_unsupported_action_exception
           rescue_from Errors::MaxContentHostsReachedException, :with => :rescue_from_max_content_hosts_reached_exception
           rescue_from ActionController::ParameterMissing, :with => :rescue_from_missing_param
@@ -94,6 +94,12 @@ module Katello
 
         def rescue_from_conflict_exception(exception)
           respond_for_exception(exception, :status => :conflict)
+        end
+
+        def rescue_from_lock_conflict_exception(exception)
+          lock_exception = OpenStruct(exception)
+          lock_exception.url = exception.url
+          respond_for_exception(lock_exception, :status => :conflict)
         end
 
         def rescue_from_record_invalid(exception)
