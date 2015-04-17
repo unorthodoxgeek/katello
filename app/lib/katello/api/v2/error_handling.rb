@@ -97,7 +97,7 @@ module Katello
         end
 
         def rescue_from_lock_conflict_exception(exception)
-          lock_exception = OpenStruct(exception)
+          lock_exception = new OpenStruct(exception)
           lock_exception.url = exception.url
           respond_for_exception(lock_exception, :status => :conflict)
         end
