@@ -97,6 +97,7 @@ module Katello
         end
 
         def rescue_from_lock_conflict_exception(exception)
+          debugger
           lock_exception = OpenStruct.new(exception)
           debugger
           lock_exception.url = exception.url
