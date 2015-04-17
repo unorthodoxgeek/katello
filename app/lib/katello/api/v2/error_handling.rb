@@ -98,6 +98,7 @@ module Katello
 
         def rescue_from_lock_conflict_exception(exception)
           lock_exception = OpenStruct.new(exception)
+          debugger
           lock_exception.url = exception.url
           respond_for_exception(lock_exception, :status => :conflict)
         end
@@ -126,6 +127,7 @@ module Katello
         end
 
         def respond_for_exception(exception, options = {})
+          debugger
           options = options.reverse_merge(
               :with_logging    => true,
               :status          => exception.respond_to?('status_code') ? exception.status_code : :internal_server_error,
