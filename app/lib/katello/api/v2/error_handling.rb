@@ -97,10 +97,8 @@ module Katello
         end
 
         def rescue_from_lock_conflict_exception(exception)
+          lock_exception = exception.conflicting_tasks.collect { |task| OpenStruct.new(:id => task.id, :url => task.url) }
           debugger
-          lock_exception = OpenStruct.new(exception)
-          debugger
-          lock_exception.url = exception.url
           respond_for_exception(lock_exception, :status => :conflict)
         end
 
@@ -128,7 +126,6 @@ module Katello
         end
 
         def respond_for_exception(exception, options = {})
-          debugger
           options = options.reverse_merge(
               :with_logging    => true,
               :status          => exception.respond_to?('status_code') ? exception.status_code : :internal_server_error,
@@ -142,6 +139,8 @@ module Katello
 
           respond_to do |format|
             #json has to be displayMessage for older RHEL 5.7 subscription managers
+            debugger
+
             format.json { render :json => { :displayMessage => options[:display_message], :errors => options[:errors]},
                                  :status => options[:status], :object => options[:object] }
             format.all { render :text => options[:text], :status => options[:status] }
