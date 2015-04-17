@@ -101,7 +101,7 @@ module Katello
             OpenStruct.new(:id => task.id, :label => task.label, :external_id => task.external_id, :url => task.url,
                            :started_at => task.started_at, :state => task.state, :result => task.result)
           end
-          debugger
+
           respond_for_exception(exception, :status => :conflict)
         end
 
@@ -144,8 +144,9 @@ module Katello
             #json has to be displayMessage for older RHEL 5.7 subscription managers
             debugger
 
-            format.json { render :json => { :displayMessage => options[:display_message], :errors => options[:errors]},
-                                 :status => options[:status], :object => options[:object] }
+            format.json { render :json => { :displayMessage => options[:display_message], :errors => options[:errors],
+                                            :object => options[:object]},
+                                 :status => options[:status] }
             format.all { render :text => options[:text], :status => options[:status] }
           end
         end
