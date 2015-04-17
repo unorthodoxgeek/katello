@@ -133,7 +133,8 @@ module Katello
 
           respond_to do |format|
             #json has to be displayMessage for older RHEL 5.7 subscription managers
-            format.json { render :json => { :displayMessage => options[:display_message], :errors => options[:errors]}, :status => options[:status] }
+            format.json { render :json => { :displayMessage => options[:display_message], :errors => options[:errors]},
+                                 :status => options[:status], :object => options[:object] }
             format.all { render :text => options[:text], :status => options[:status] }
           end
         end
