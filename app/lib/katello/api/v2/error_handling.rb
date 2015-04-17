@@ -124,7 +124,8 @@ module Katello
               :with_logging    => true,
               :status          => exception.respond_to?('status_code') ? exception.status_code : :internal_server_error,
               :text            => exception.message,
-              :display_message => exception.message)
+              :display_message => exception.message,
+              :object => exception)
 
           options[:errors] = exception.respond_to?(:record) ? exception.record.errors : [exception.message]
 
