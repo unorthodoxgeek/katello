@@ -101,6 +101,7 @@ module Katello
             OpenStruct.new(:id => task.id, :label => task.label, :external_id => task.external_id, :url => task.url,
                            :started_at => task.started_at, :state => task.state, :result => task.result)
           end
+          debugger
           respond_for_exception(exception, :status => :conflict)
         end
 
