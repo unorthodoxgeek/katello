@@ -6,13 +6,13 @@ module BastionKatello
       app.middleware.use ::ActionDispatch::Static, "#{BastionKatello::Engine.root}/app/assets/javascripts/bastion_katello"
     end
 
-    initializer "bastion.assets.paths", :group => :all do |app|
-      app.middleware.use ::ActionDispatch::Static, "#{BastionKatello::Engine.root}/app/assets/javascripts/bastion_katello"
-
-      if defined? Less::Rails
-        app.config.less.paths << "#{BastionKatello::Engine.root}/app/assets/stylesheets/bastion_katello"
-      end
-    end
+    # initializer "bastion.assets.paths", :group => :all do |app|
+    #   app.middleware.use ::ActionDispatch::Static, "#{BastionKatello::Engine.root}/app/assets/javascripts/bastion_katello"
+    #
+    #   if defined? Less::Rails
+    #     app.config.less.paths << "#{BastionKatello::Engine.root}/app/assets/stylesheets/bastion_katello"
+    #   end
+    # end
 
     config.to_prepare do
       Bastion.register_plugin(
