@@ -64,7 +64,7 @@ module Katello
     end
 
     def find_system
-      @system = System.where(:conditions => { :uuid => params[:system_id] }).first
+      @system = System.where(:uuid => params[:system_id]).first
       fail HttpErrors::NotFound, _("Couldn't find system '%s'") % params[:system_id] if @system.nil?
       @system
     end

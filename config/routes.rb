@@ -171,3 +171,7 @@ Katello::Engine.routes.draw do
     match '/403' => 'application#permission_denied', :via => :get
   end
 end
+
+Rails.application.routes.draw do
+  mount Katello::Engine, :at => '/'
+end
